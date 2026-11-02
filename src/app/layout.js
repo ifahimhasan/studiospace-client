@@ -3,6 +3,8 @@ import { GeistMono } from "geist/font/mono";
 import "@fontsource-variable/bricolage-grotesque";
 import "./globals.css";
 import Providers from "./providers";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
@@ -14,8 +16,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="studiodark" suppressHydrationWarning>
-      <body className={`${GeistSans.variable} ${GeistMono.variable} min-h-screen overflow-x-hidden`}>
-        <Providers>{children}</Providers>
+      <body className={`${GeistSans.variable} ${GeistMono.variable} flex min-h-screen flex-col overflow-x-hidden`}>
+        <Providers>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
