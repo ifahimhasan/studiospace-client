@@ -2,6 +2,7 @@
 
 import { ThemeProvider, useTheme } from "next-themes";
 import { Toaster } from "sonner";
+import { WishlistProvider } from "@/components/WishlistProvider";
 
 function ThemedToaster() {
   const { resolvedTheme } = useTheme();
@@ -27,7 +28,7 @@ export default function Providers({ children }) {
       enableSystem={false}
       disableTransitionOnChange
     >
-      {children}
+      <WishlistProvider>{children}</WishlistProvider>
       <ThemedToaster />
     </ThemeProvider>
   );
