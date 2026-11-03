@@ -2,8 +2,9 @@
 
 **Peer-to-peer creative workspace & production studio sharing platform.** Hosts list photo studios, sound stages, podcast lounges, music suites and art workshops; creators discover them, check availability and book by the hour.
 
-**Live site:** https://your-studiospace.vercel.app ← replace with your deployed URL
-**API repo:** `studiospace-server` (Express + MongoDB)
+**Live site:** https://studiospace-fahim.netlify.app
+
+**Server repo:** https://github.com/ifahimhasan/studiospace-server
 
 ## Features
 
@@ -31,23 +32,21 @@
 
 | Role | Email | Password |
 |---|---|---|
-| Creator / host | `examiner@studiospace.dev` | `Examiner123` |
+| Creator | `examiner@studiospace.dev` | `Examiner123` |
 | Demo host (owns the seeded studios) | `host@studiospace.dev` | `HostDemo123` |
-
-> Create these two accounts on the live site once after deploying (Register page), then run `npm run seed` in the API so the demo studios belong to `host@studiospace.dev`.
 
 ## Local setup
 
 ```bash
 # 1. API
-git clone <server-repo-url> studiospace-server
+git clone https://github.com/ifahimhasan/studiospace-server.git
 cd studiospace-server && npm install
 cp .env.example .env          # MONGODB_URI, CLIENT_URL=http://localhost:3000
 npm run seed                  # optional demo studios
 npm run dev                   # http://localhost:5000
 
 # 2. Client (new terminal)
-git clone <client-repo-url> studiospace-client
+git clone https://github.com/ifahimhasan/studiospace-client.git
 cd studiospace-client && npm install
 cp .env.example .env.local    # fill every value
 npm run dev                   # http://localhost:3000
@@ -70,9 +69,9 @@ Environment variables (`.env.local`):
 - After login the client asks BetterAuth for a JWT and posts it to the API once; the API verifies it against `/api/auth/jwks` and stores it in the cookie. If the cookie is missing or expired, the client re-syncs automatically on the first `401`.
 - `src/middleware.js` protects `/dashboard`, `/add-studio`, `/my-listings`, `/my-bookings` and `/studios/edit/*`.
 
-## Deploy (Vercel)
+## Deployment
 
-1. Deploy the API first (Render or Vercel) and note its URL.
-2. Import this repo in Vercel, add every variable above (with the live URLs) and deploy.
-3. Set the API's `CLIENT_URL` to the live client URL and redeploy the API.
-4. Add the live callback URL to your Google OAuth client.
+- **Client:** Netlify (Next.js runtime) — https://studiospace-fahim.netlify.app
+- **Server:** Render web service (Express + MongoDB Atlas)
+
+Set every variable above in Netlify, with `BETTER_AUTH_URL` / `NEXT_PUBLIC_SITE_URL` pointing at the Netlify URL and `API_URL` at the Render URL. On Render, set `CLIENT_URL` to the Netlify URL. Add `<site-url>/api/auth/callback/google` as an authorised redirect URI in Google Cloud.
